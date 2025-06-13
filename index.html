@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>إشعارات كل نص ساعة</title>
+</head>
+<body>
+  <h1>👋 أهلا بيك</h1>
+  <p>اضغط الزر عشان تبدأ تستقبل إشعارات كل 30 دقيقة.</p>
+  <button id="notifyBtn">ابدأ الإشعارات</button>
+
+  <script>
+    const button = document.getElementById('notifyBtn');
+
+    button.addEventListener('click', () => {
+      Notification.requestPermission().then(permission => {
+        if (permission === "granted") {
+          function sendNotification() {
+            new Notification("🔔 إشعار نص ساعة", {
+              body: "عدّى نص ساعة! 👀",
+              icon: "https://i.imgur.com/Zh6F2vD.png"
+            });
+          }
+          sendNotification(); // أول إشعار حالاً
+          setInterval(sendNotification, 1800000); // كل 30 دقيقة
+        } else {
+          alert("اضغط زر السماح عشان تجيلك إشعارات.");
+        }
+      });
+    });
+  </script>
+</body>
+</html>
