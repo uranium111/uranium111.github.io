@@ -1,89 +1,24 @@
 <!DOCTYPE html>
-<html lang="ar">
-<head>
-  <meta charset="UTF-8">
-  <title>إشعارات كل نص ساعة</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      text-align: center;
-      padding: 50px;
-      background-color: #f5f5f5;
-    }
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>اختبار إشعارات</title>
+  </head>
+  <body>
+    <button onclick="requestAndNotify()">جرّب الإشعار</button>
 
-    h1 {
-      color: #333;
-    }
-
-    button {
-      background-color: #007bff;
-      color: white;
-      border: none;
-      padding: 15px 30px;
-      font-size: 18px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    button:hover {
-      background-color: #0056b3;
-    }
-
-    button:disabled {
-      background-color: #aaa;
-      cursor: default;
-    }
-
-    .status {
-      margin-top: 20px;
-      font-size: 16px;
-      color: green;
-    }
-  </style>
-</head>
-<body>
-  <h1>🔔 إشعارات كل 30 دقيقة</h1>
-  <p>اضغط الزر واسمح بالإشعارات، وهتفكرك كل نص ساعة.</p>
-  <button id="notifyBtn">ابدأ الإشعارات</button>
-  <div class="status" id="status"></div>
-
-  <script>
-    const button = document.getElementById('notifyBtn');
-    const status = document.getElementById('status');
-
-    button.addEventListener('click', () => {
-      if (!("Notification" in window)) {
-        alert("المتصفح بتاعك مش بيدعم الإشعارات 😢");
-        return;
-      }
-
-      Notification.requestPermission().then(permission => {
-        if (permission === "granted") {
-          // إشعار أول
-          new Notification("✅ تم التفعيل", {
-            body: "الإشعارات اشتغلت وهتبعت كل نص ساعة",
-            icon: "https://i.imgur.com/Zh6F2vD.png"
-          });
-
-          // تحديث شكل الزر
-          button.textContent = "✅ الإشعارات مفعّلة";
-          button.disabled = true;
-          status.textContent = "هيجيلك إشعار كل 30 دقيقة ✨";
-
-          // إشعار دوري كل 30 دقيقة
-          setInterval(() => {
-            new Notification("🔔 مر نص ساعة!", {
-              body: "إشعار دوري كل 30 دقيقة 👀",
-              icon: "https://i.imgur.com/Zh6F2vD.png"
+    <script>
+      function requestAndNotify() {
+        Notification.requestPermission().then(permission => {
+          if (permission === "granted") {
+            new Notification("شغال 💥", {
+              body: "الإشعارات شغالة تمام!",
             });
-          }, 1800000); // 30 دقيقة
-
-        } else {
-          alert("لازم تسمح بالإشعارات عشان تشتغل ✋");
-        }
-      });
-    });
-  </script>
-</body>
+          } else {
+            alert("لازم تسمح بالإشعارات");
+          }
+        });
+      }
+    </script>
+  </body>
 </html>
