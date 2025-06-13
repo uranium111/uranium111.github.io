@@ -6,25 +6,35 @@
 </head>
 <body>
   <h1>👋 أهلا بيك</h1>
-  <p>اضغط الزر عشان تبدأ تستقبل إشعارات كل 30 دقيقة.</p>
+  <p>اضغط على الزر واديني صلاحية الإشعارات، وأنا هبعتلك إشعار كل 30 دقيقة.</p>
   <button id="notifyBtn">ابدأ الإشعارات</button>
 
   <script>
     const button = document.getElementById('notifyBtn');
 
     button.addEventListener('click', () => {
+      if (!("Notification" in window)) {
+        alert("المتصفح بتاعك مش بيدعم الإشعارات 😢");
+        return;
+      }
+
       Notification.requestPermission().then(permission => {
         if (permission === "granted") {
-          function sendNotification() {
-            new Notification("🔔 إشعار نص ساعة", {
-              body: "عدّى نص ساعة! 👀",
+          // إشعار فوري
+          new Notification("🔔 إشعار أول", {
+            body: "تم التفعيل! هنفكرك كل 30 دقيقة 💡",
+            icon: "https://i.imgur.com/Zh6F2vD.png"
+          });
+
+          // إشعار كل 30 دقيقة
+          setInterval(() => {
+            new Notification("⏰ نص ساعة عدت", {
+              body: "إشعار دوري كل 30 دقيقة 👀",
               icon: "https://i.imgur.com/Zh6F2vD.png"
             });
-          }
-          sendNotification(); // أول إشعار حالاً
-          setInterval(sendNotification, 1800000); // كل 30 دقيقة
+          }, 1800000); // 30 دقيقة
         } else {
-          alert("اضغط زر السماح عشان تجيلك إشعارات.");
+          alert("مش هقدر أبعت إشعارات غير لما تسمحلي 🙃");
         }
       });
     });
